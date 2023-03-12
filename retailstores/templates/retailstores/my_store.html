@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% block title %}
+{% for i in store %}
+{{i.name}}
+{% endfor %}
+{% endblock title %}
+
+{% block content %}
+{% for i in store %}
+<div class="container mt-3">
+    <div class="adminActions" >
+        <a class="adminButton" data-content="" href="{% url 'retailstore:store-update' request.user.store.pk %}"><i class="fa fa-edit" aria-hidden="true"></i></a>
+    </div>
+    <h1 class="ui header text-center">{{i.name}}</h1>
+    <p class="meta text-center">({{i.categories}})</p>
+    <img src="{{i.cover_image.url}}" class="img-fluid img-thumbnail" alt="" width='100%' height='80vh' />
+
+    <div class="row mt-4">
+        <div class="col-lg-6 col-sm-12 ">
+            <div class="row mb-3">
+                <div class="col-4 text-center ">
+                    {% if i.photo_1 %}
+                    <img src="{{i.photo_1.url}}" onclick="openModal();currentSlide(1)"
+                        class="img-fluid img-thumbnail hover-shadow img_poniters" alt="" width="80%" />
+                    {% else %}
+                    <p>Update Image</p>
+                    {% endif %}
+                </div>
+                <div class="col-4 text-center ">
+                    {% if i.photo_2 %}
+                    <img src="{{i.photo_2.url}}" onclick="openModal();currentSlide(2)"
+                        class="img-fluid img_poniters img-thumbnail hover-shadow" alt="" width="80%" />
+                    {% else %}
+                    <p>Update Image</p>
+                    {% endif %}
+                </div>
+                <div class="col-4 text-center">
+                    {% if i.photo_3 %}
+                    <img src="{{i.photo_3.url}}" onclick="openModal();currentSlide(3)"
+                        class="img-fluid  img_poniters img-thumbnail hover-shadow" alt="" width="80%" />
+                    {% else %}
+                    <p>Update Image</p>
+                    {% endif %}
+                </div>
+            </div>
+            <hr>
+            <div class="row p-2 mb-3">
+                <p> <b class='border-bottom'>About Store </b> <br /> {{i.description}}</p>
+            </div>
+        </div>
+        <div class="col-lg-6 col-sm-12">
+            <div class="row p-2 mb-3">
+
+                <table class="ui celled  table">
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>From</th>
+                            <th>To</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-weight-bold">Monday</td>
+                            {% if i.mon_start %}
+                            <td class="text-success">{{i.mon_start}}</td>
+                            {% else %}
+                            <td class='text-danger'>Closed</td>
+                            {% endif %}
+                            {% if i.mon_end %}
+                            <td class=" text-success">{{i.mon_end}}</td>
+                            {% else %}
+                            <td class='text-danger'>Closed</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Tuesday</td>
+                            {% if i.tue_start %}
+                            <td class="text-success">{{i.tue_start}}</td>
+                            {% else %}
+                            <td class='text-danger'>Closed</td>
+                            {% endif %}
+                            {% if i.tue_end %}
+                            <td class=" text-success">{{i.tue_end}}</td>
+                            {% else %}
+                            <td class='text-danger '>Closed</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Wednesday</td>
+                            {% if i.wed_start %}
+                            <td class="text-success">{{i.wed_start}}</td>
+                            {% else %}
+                            <td class='text-danger'>Closed</td>
+                            {% endif %}
+                            {% if i.wed_end %}
+                            <td class=" text-success">{{i.wed_end}}</td>
+                            {% else %}
+                            <td class='text-danger '>Closed</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Thursday</td>
+                            {% if i.thu_start %}
+                            <td class="text-success">{{i.thu_start}}</td>
+                            {% else %}
+                            <td class='text-danger'>Closed</td>
+                            {% endif %}
+                            {% if i.thu_end %}
+                            <td class=" text-success">{{i.thu_end}}</td>
+                            {% else %}
+                            <td class='text-danger '>Closed</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Friday</td>
+                            {% if i.fri_start %}
+                            <td class="text-success">{{i.fri_start}}</td>
+                            {% else %}
+                            <td class='text-danger'>Closed</td>
+                            {% endif %}
+                            {% if i.fri_end %}
+                            <td class=" text-success">{{i.fri_end}}</td>
+                            {% else %}
+                            <td class='text-danger '>Closed</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Saturday</td>
+                            {% if i.sat_start %}
+                            <td class="text-success">{{i.sat_start}}</td>
+                            {% else %}
+                            <td class='text-danger'>Closed</td>
+                            {% endif %}
+                            {% if i.sat_end %}
+                            <td class=" text-success">{{i.sat_end}}</td>
+                            {% else %}
+                            <td class='text-danger '>Closed</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Sunday</td>
+                            {% if i.sun_start %}
+                            <td class="text-success">{{i.sun_start}}</td>
+                            {% else %}
+                            <td class='text-danger'>Closed</td>
+                            {% endif %}
+                            {% if i.sun_end %}
+                            <td class=" text-success">{{i.sun_end}}</td>
+                            {% else %}
+                            <td class='text-danger '>Closed</td>
+                            {% endif %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr />
+            <a class="googleMapPopUp">
+                <iframe src="{{i.url}}" style="border: #0b0b0b; width: 100%; height: 50vh"
+                    alt="Image placeholder"></iframe>
+            </a>
+        </div>
+
+
+    </div>
+    <!-- The Modal/Lightbox -->
+    <div id="myModal" class="modal">
+        <span class="close cursor" onclick="closeModal()">&times;</span>
+        <div class="modal-content text-center">
+            {% if i.photo_1 %}
+            <div class="mySlides">
+                <img src="{{i.photo_1.url}}" style="width:70%">
+            </div>
+            {% endif %}
+            {% if i.photo_2 %}
+            <div class="mySlides">
+                <img src="{{i.photo_2.url}}" style="width:70%">
+            </div>
+            {% endif %}
+
+            {% if i.photo_3 %}
+            <div class="mySlides">
+                <img src="{{i.photo_3.url}}" style="width:70%">
+            </div>
+            {% endif %}
+            <!-- Next/previous controls -->
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}

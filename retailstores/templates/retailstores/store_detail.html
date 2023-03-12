@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}
+-View-Store
+{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <h3 class="text-center mt-2 font-weight-bold border-bottom">Find Stores Here</h3>
+    <!-- <div class="row"> -->
+    {% if user.is_authenticated %}
+    {% if not user.store %}
+    <h3 class='text-success text-center mt-3'>Please Open Your Store</h3>
+    {% endif %}
+    {% endif %}
+
+    <!-- </div> -->
+</div>
+<div class="container mt-5 mb-5">
+
+    <div class="row">
+        {% if store %}
+        {% for i in store %}
+        <div class=" col-md-4 col-sm-12 mb-5">
+            <div class="ui centered card">
+                <a class="image" href="{% url 'retailstore:store_single' i.pk %}">
+                    {% if i.cover_image %}
+                    <img src="{{i.cover_image.url}}">
+                    {% endif %}
+                </a>
+                <div class="content">
+                    <a class="header" href="{% url 'retailstore:store_single' i.pk %}">{{i.name}}</a>
+                    <div class="meta">
+                        <p>{{i.categories}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h3 class='text-success text-center mt-3'>Please Login, To open your store</h3>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

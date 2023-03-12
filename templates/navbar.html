@@ -1,0 +1,55 @@
+{% load static %}
+{% url 'retailstore:store' as rst %}
+{% url 'retailstore:store' as allstore %}
+{% url 'retailstore:add_store' as addstore %}
+{% url 'login' as login %}
+{% url 'register' as register %}
+{% url 'logout' as logout %}
+{% url 'retailstore:my_store' request.user as mystore %}
+{% url 'retailstore:store-update' request.user.store.pk as storeupdate %}
+
+
+<nav class="navbar navbar-expand-lg navbar-dark nav_color sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="/">OurStore&nbsp;<i class='fas fa-store-alt'></i></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+      aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav ml-auto">
+        {% if user.is_authenticated %}
+        <li class="nav-item mr-2 text-warning my-2"><b>Hello {{request.user}} </b></li>
+        {% endif %}
+        <li class="nav-item {% if request.path == rst %}active{% endif %}">
+          <a class="nav-link" href="{{rst}}">View Stores</a>
+        </li>
+        {% if user.is_authenticated  %}
+        {% if request.user == user.store %}
+        <li class="nav-item {% if request.path == mystore %}active{% endif %}">
+          <a class="nav-link" href="{{mystore}}">MyStore</a>
+        </li>
+        <li class="nav-item {% if request.path == storeupdate %}active{% endif %}">
+          <a class="nav-link" href="{{storeupdate}}">Update Store</a>
+        </li>
+        {% else %}
+        <li class="nav-item {% if request.path == addstore %}active{% endif %}">
+          <a class="nav-link" href="{{addstore}}">Open Store</a>
+        </li>
+        {% endif %}
+        <li class="nav-item {% if request.path == logout %}active{% endif %}">
+          <a class="nav-link" href="{{logout}}">Logout</a>
+        </li>
+        {% else %}
+        <li class="nav-item {% if request.path == login %}active{% endif %}">
+          <a class="nav-link" href="{{login}}">Login</a>
+        </li>
+        <li class="nav-item {% if request.path == register %}active{% endif %}">
+          <a class="nav-link" href="{{register}}">SignUp</a>
+        </li>
+        {% endif %}
+
+    </div>
+  </div>
+</nav>

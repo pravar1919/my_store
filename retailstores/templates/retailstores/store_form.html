@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+-Update-Store
+{% endblock title %}
+
+{% block content %}
+
+
+
+<div class="container mt-5">
+    <div class="ui grid">
+        <div class="sixteen wide column">
+            <div class="ui segment">
+                <h3 class="border-bottom mb-4">Udate Your Store</h3>
+                <form class="ui form" method="POST" action='.' enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="form-group">
+                        <button class="btn btn-outline-info" type="submit">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
